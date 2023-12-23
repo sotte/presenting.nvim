@@ -1,0 +1,124 @@
+* =presenting.nvim=
+  :PROPERTIES:
+  :CUSTOM_ID: presenting.nvim
+  :END:
+
+=presenting.nvim= is a neovim plugin that turns your markup files into
+slides (in neovim).
+
+It is rewrite of
+[[https://github.com/sotte/presenting.vim/][=presenting.vim=]] in lua.
+It simplifies the code (and removes some features). =presenting.vim= is
+a clone of [[https://github.com/pct/present.vim][=present.vim=]] which
+is a clone of [[https://github.com/sorah/presen.vim][=presen.vim=]].
+
+* Usage
+  :PROPERTIES:
+  :CUSTOM_ID: usage
+  :END:
+
+With =presenting.nvim= installed and configured (see section below) open
+a markdown/org/adoc file, then start the presentation using global
+=Presenting= lua object:
+
+#+BEGIN_EXAMPLE
+  :lua Presenting.toggle()
+#+END_EXAMPLE
+
+or using the =Presenting= user command:
+
+#+BEGIN_EXAMPLE
+  :Presenting
+#+END_EXAMPLE
+
+Then navigate the presentation with the keys: - /q/: quit presentation
+mode - /n/: next slide - /p/: previous slide - /f/: first slide - /l/:
+last slide
+
+** Usage - I want to know more
+   :PROPERTIES:
+   :CUSTOM_ID: usage---i-want-to-know-more
+   :END:
+
+This =README= is intentionally short. For more information, see
+=:help presenting.nvim= and the
+[[https://github.com/sotte/presenting.nvim/doc/presenting.txt][documentation]].
+
+* Installation and Setup
+  :PROPERTIES:
+  :CUSTOM_ID: installation-and-setup
+  :END:
+
+With =lazy.nvim=:
+
+#+BEGIN_EXAMPLE
+  return {
+    "sotte/presenting.nvim",
+    opts = {
+      -- fill in your options here
+      -- see :help Presenting.config
+    },
+    cmd = { "Presenting" },
+  }
+#+END_EXAMPLE
+
+* Tips
+  :PROPERTIES:
+  :CUSTOM_ID: tips
+  :END:
+
+😎 Directly start a presentation from the CLI:
+
+#+BEGIN_SRC sh
+  nvim -c Presenting README.md
+  nvim -c Presenting README.org
+  nvim -c Presenting README.adoc
+#+END_SRC
+
+🔬 Zoom in with your terminal emulator to make the slides *bigger*.
+
+* DevMode
+  :PROPERTIES:
+  :CUSTOM_ID: devmode
+  :END:
+
+There is a dev mode that unloads+reloads the plugin which is handy if
+you're developing the plugin.
+
+#+BEGIN_EXAMPLE
+  PresentingDevMode
+#+END_EXAMPLE
+
+* Demo of markup elements
+  :PROPERTIES:
+  :CUSTOM_ID: demo-of-markup-elements
+  :END:
+
+I use this README as a demo of the markup elements. The following
+sections don't have to do anything with the plugin itself.
+
+** Markup and Lists
+   :PROPERTIES:
+   :CUSTOM_ID: markup-and-lists
+   :END:
+
+*bolb* and /italic/ and /italic/ and =code= and +strike+ and mark and
+underline
+
+- list
+- list
+
+  - list
+  - list
+
+** Code block
+   :PROPERTIES:
+   :CUSTOM_ID: code-block
+   :END:
+
+#+BEGIN_SRC python
+  def fib(n: int) -> int:
+      if n < 2:
+          return n
+      return fib(n - 1) + fib(n - 2)
+#+END_SRC

@@ -1,0 +1,174 @@
+==============================================================================
+------------------------------------------------------------------------------
+*presenting.nvim*
+*Presenting*
+
+MIT License Copyright (c) 2024 Stefan Otte
+
+==============================================================================
+
+Present your markdown, org-mode, or asciidoc files in a nice way,
+i.e. directly in nvim.
+
+------------------------------------------------------------------------------
+                                                            *Presenting.setup()*
+                          `Presenting.setup`({config})
+Module setup
+
+Parameters ~
+{config} `(table|nil)`
+Usage ~
+`require('presenting').setup({})`
+
+------------------------------------------------------------------------------
+                                                             *Presenting.config*
+                              `Presenting.config`
+Module config
+
+Default values:
+>
+  Presenting.config = {
+    options = {
+      width = 60,
+    },
+    separator = {
+      -- Note: separators are lua patterns, not regexes.
+      markdown = "^#+ ",
+      org = "^*+ ",
+      adoc = "^==+ ",
+      asciidoctor = "^==+ ",
+    },
+    keymaps = {
+      ["n"] = "next",
+      ["p"] = "prev",
+      ["q"] = "quit",
+      ["f"] = "first",
+      ["l"] = "last",
+      ["<CR>"] = "next",
+      ["<BS>"] = "prev",
+    },
+  }
+<
+# Options ~
+
+------------------------------------------------------------------------------
+==============================================================================
+Core functionality
+
+------------------------------------------------------------------------------
+                                                           *Presenting.toggle()*
+                        `Presenting.toggle`({separator})
+Toggle presenting mode on/off for the current buffer.
+Parameters ~
+{separator} `(string|nil)`
+
+------------------------------------------------------------------------------
+                                                            *Presenting.start()*
+                        `Presenting.start`({separator})
+Start presenting the current buffer.
+Parameters ~
+{separator} `(string|nil)`
+
+------------------------------------------------------------------------------
+                                                             *Presenting.quit()*
+                              `Presenting.quit`()
+Quit the current presentation and go back to the normal buffer.
+By default this is mapped to `q`.
+
+------------------------------------------------------------------------------
+                                                             *Presenting.next()*
+                              `Presenting.next`()
+Go to the next slide.
+By default this is mapped to `<CR>` and `n`.
+
+------------------------------------------------------------------------------
+                                                             *Presenting.prev()*
+                              `Presenting.prev`()
+Go to the previous slide.
+By default this is mapped to `<BS>` and `p`.
+
+------------------------------------------------------------------------------
+                                                            *Presenting.first()*
+                              `Presenting.first`()
+Go to the first slide.
+By default this is mapped to `f`.
+
+------------------------------------------------------------------------------
+                                                             *Presenting.last()*
+                              `Presenting.last`()
+Go to the last slide.
+By default this is mapped to `l`.
+
+------------------------------------------------------------------------------
+                                                           *Presenting.resize()*
+                             `Presenting.resize`()
+the slide window.
+
+------------------------------------------------------------------------------
+                                                              *H.default_config*
+                               `H.default_config`
+==============================================================================
+Internal Helper
+As end user you should not need to use these functions.
+
+------------------------------------------------------------------------------
+                                                              *H.setup_config()*
+                           `H.setup_config`({config})
+Parameters ~
+{config} `(table|nil)`
+
+------------------------------------------------------------------------------
+                                                              *H.apply_config()*
+                           `H.apply_config`({config})
+Parameters ~
+{config} `(table)`
+
+------------------------------------------------------------------------------
+                                                           *H.get_win_configs()*
+                             `H.get_win_configs`()
+Return ~
+`(table)`
+
+------------------------------------------------------------------------------
+                                                         *H.create_slide_view()*
+                         `H.create_slide_view`({state})
+Parameters ~
+{state} `(table)`
+
+------------------------------------------------------------------------------
+                                                              *H.parse_slides()*
+                     `H.parse_slides`({lines}, {separator})
+Parameters ~
+{lines} `(table)`
+{separator} `(string)`
+Return ~
+`(table)`
+
+------------------------------------------------------------------------------
+                                                  *H.set_slide_buffer_options()*
+                      `H.set_slide_buffer_options`({buf})
+Parameters ~
+{buf} `(integer)`
+
+------------------------------------------------------------------------------
+                                                         *H.set_slide_content()*
+                    `H.set_slide_content`({state}, {slide})
+Parameters ~
+{state} `(table)`
+{slide} `(integer)`
+
+------------------------------------------------------------------------------
+                                                         *H.set_slide_keymaps()*
+                    `H.set_slide_keymaps`({buf}, {mappings})
+Parameters ~
+{buf} `(integer)`
+{mappings} `(table)`
+
+------------------------------------------------------------------------------
+                                                        *H.in_presenting_mode()*
+                            `H.in_presenting_mode`()
+Return ~
+`(boolean)`
+
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
