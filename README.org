@@ -42,7 +42,7 @@ last slide
 
 This =README= is intentionally short. For more information, see
 =:help presenting.nvim= and the
-[[https://github.com/sotte/presenting.nvim/doc/presenting.txt][documentation]].
+[[https://github.com/sotte/presenting.nvim/blob/main/doc/presenting.txt][documentation]].
 
 * Installation and Setup
   :PROPERTIES:
