@@ -34,7 +34,7 @@ Then navigate the presentation with the keys:
 This `README` is intentionally short.
 For more information,
 see `:help presenting.nvim`
-and the [documentation](https://github.com/sotte/presenting.nvim/doc/presenting.txt).
+and the [documentation](https://github.com/sotte/presenting.nvim/blob/main/doc/presenting.txt).
 
 
 # Installation and Setup
