@@ -8,11 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Support lua functions to for keymaps
+- Allow to disable existing keymaps by setting them to `nil`
+
 ### Changed
 - Disable "release" workflow
 
 ### Fixed
 - Fix url to doc/presenting.txt
+- README: list of keymaps was broken
 
 ### Removed
 

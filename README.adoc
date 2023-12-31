@@ -25,9 +25,13 @@ or using the `Presenting` user command:
 :Presenting
 ....
 
-Then navigate the presentation with the keys: - _q_: quit presentation
-mode - _n_: next slide - _p_: previous slide - _f_: first slide - _l_:
-last slide
+Then navigate the presentation with the keys:
+
+* _q_: quit presentation mode
+* _n_: next slide
+* _p_: previous slide
+* _f_: first slide
+* _l_: last slide
 
 === Usage - I want to know more
 

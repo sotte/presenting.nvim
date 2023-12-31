@@ -31,9 +31,13 @@ or using the =Presenting= user command:
   :Presenting
 #+END_EXAMPLE
 
-Then navigate the presentation with the keys: - /q/: quit presentation
-mode - /n/: next slide - /p/: previous slide - /f/: first slide - /l/:
-last slide
+Then navigate the presentation with the keys:
+
+- /q/: quit presentation mode
+- /n/: next slide
+- /p/: previous slide
+- /f/: first slide
+- /l/: last slide
 
 ** Usage - I want to know more
    :PROPERTIES:
