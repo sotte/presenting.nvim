@@ -81,7 +81,7 @@ sections don’t have to do anything with the plugin itself.
 
 === Markup and Lists
 
-*bolb* and _italic_ and _italic_ and `code` and [line-through]*strike*
+*bolt* and _italic_ and _italic_ and `code` and [line-through]*strike*
 
 * list
 * list
