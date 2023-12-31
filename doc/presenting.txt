@@ -53,13 +53,15 @@ Default values:
       ["<CR>"] = function() Presenting.next() end,
       ["<BS>"] = function() Presenting.prev() end,
     },
+    -- A function that configures the slide buffer.
+    -- If you want custom settings write your own function that accepts a buffer id as argument.
+    configure_slide_buffer = function(buf) H.configure_slide_buffer(buf) end,
   }
 <
-# Options ~
 
 ------------------------------------------------------------------------------
 ==============================================================================
-Core functionality
+# Core functionality
 
 ------------------------------------------------------------------------------
                                                            *Presenting.toggle()*
@@ -73,7 +75,7 @@ Parameters ~
                         `Presenting.start`({separator})
 Start presenting the current buffer.
 Parameters ~
-{separator} `(string|nil)`
+{separator} `(string|nil)` Overwrite the default separator if specified.
 
 ------------------------------------------------------------------------------
                                                              *Presenting.quit()*
@@ -151,8 +153,8 @@ Return ~
 `(table)`
 
 ------------------------------------------------------------------------------
-                                                  *H.set_slide_buffer_options()*
-                      `H.set_slide_buffer_options`({buf})
+                                                    *H.configure_slide_buffer()*
+                       `H.configure_slide_buffer`({buf})
 Parameters ~
 {buf} `(integer)`
 
