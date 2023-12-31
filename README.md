@@ -83,7 +83,7 @@ The following sections don't have to do anything with the plugin itself.
 
 ## Markup and Lists
 
-**bolb** and *italic* and _italic_ and `code` and ~~strike~~
+**bolt** and *italic* and _italic_ and `code` and ~~strike~~
 
 - list
 - list

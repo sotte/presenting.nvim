@@ -104,7 +104,7 @@ sections don't have to do anything with the plugin itself.
    :CUSTOM_ID: markup-and-lists
    :END:
 
-*bolb* and /italic/ and /italic/ and =code= and +strike+
+*bolt* and /italic/ and /italic/ and =code= and +strike+
 
 - list
 - list
