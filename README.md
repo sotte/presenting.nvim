@@ -22,6 +22,7 @@ or using the `Presenting` user command:
 ```
 
 Then navigate the presentation with the keys:
+
 - *q*: quit presentation mode
 - *n*: next slide
 - *p*: previous slide
