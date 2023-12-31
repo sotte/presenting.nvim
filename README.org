@@ -12,6 +12,16 @@ It simplifies the code (and removes some features). =presenting.vim= is
 a clone of [[https://github.com/pct/present.vim][=present.vim=]] which
 is a clone of [[https://github.com/sorah/presen.vim][=presen.vim=]].
 
+* Demo
+  :PROPERTIES:
+  :CUSTOM_ID: demo
+  :END:
+
+#+CAPTION: demo presentation
+[[file:examples/presentation.gif]]
+
+(Images don't work in nvim by default 😢)
+
 * Usage
   :PROPERTIES:
   :CUSTOM_ID: usage
@@ -81,18 +91,6 @@ With =lazy.nvim=:
 
 🔬 Zoom in with your terminal emulator to make the slides *bigger*.
 
-* DevMode
-  :PROPERTIES:
-  :CUSTOM_ID: devmode
-  :END:
-
-There is a dev mode that unloads+reloads the plugin which is handy if
-you're developing the plugin.
-
-#+BEGIN_EXAMPLE
-  PresentingDevMode
-#+END_EXAMPLE
-
 * Demo of markup elements
   :PROPERTIES:
   :CUSTOM_ID: demo-of-markup-elements
@@ -106,14 +104,15 @@ sections don't have to do anything with the plugin itself.
    :CUSTOM_ID: markup-and-lists
    :END:
 
-*bolb* and /italic/ and /italic/ and =code= and +strike+ and mark and
-underline
+*bolb* and /italic/ and /italic/ and =code= and +strike+
 
 - list
 - list
 
   - list
   - list
+
+    - list
 
 ** Code block
    :PROPERTIES:
@@ -126,3 +125,15 @@ underline
           return n
       return fib(n - 1) + fib(n - 2)
 #+END_SRC
+
+* DevMode
+  :PROPERTIES:
+  :CUSTOM_ID: devmode
+  :END:
+
+There is a dev mode that unloads+reloads the plugin which is handy if
+you're developing the plugin.
+
+#+BEGIN_EXAMPLE
+  PresentingDevMode
+#+END_EXAMPLE
