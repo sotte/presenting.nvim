@@ -36,7 +36,6 @@ end
 ---
 --- Default values:
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
----@text # Options ~
 Presenting.config = {
   options = {
     -- The width of the slide buffer.
@@ -63,11 +62,14 @@ Presenting.config = {
     ["<CR>"] = function() Presenting.next() end,
     ["<BS>"] = function() Presenting.prev() end,
   },
+  -- A function that configures the slide buffer.
+  -- If you want custom settings write your own function that accepts a buffer id as argument.
+  configure_slide_buffer = function(buf) H.configure_slide_buffer(buf) end,
 }
 --minidoc_afterlines_end
 
 --- ==============================================================================
---- Core functionality
+--- # Core functionality
 
 --- Toggle presenting mode on/off for the current buffer.
 ---@param separator string|nil
@@ -80,7 +82,7 @@ Presenting.toggle = function(separator)
 end
 
 --- Start presenting the current buffer.
----@param separator string|nil
+---@param separator string|nil Overwrite the default separator if specified.
 Presenting.start = function(separator)
   if H.in_presenting_mode() then
     vim.notify("Already presenting")
@@ -282,7 +284,7 @@ H.create_slide_view = function(state)
 
   state.slide_buf = vim.api.nvim_create_buf(false, true)
   state.slide_win = vim.api.nvim_open_win(state.slide_buf, true, window_config.slide)
-  H.set_slide_buffer_options(Presenting._state.slide_buf)
+  Presenting.config.configure_slide_buffer(state.slide_buf)
   H.set_slide_keymaps(state.slide_buf, Presenting.config.keymaps)
 
   H.set_slide_content(state, 1)
@@ -308,7 +310,7 @@ H.parse_slides = function(lines, separator)
 end
 
 ---@param buf integer
-H.set_slide_buffer_options = function(buf)
+H.configure_slide_buffer = function(buf)
   -- TODO: make this configurable via config
   vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
   vim.api.nvim_buf_set_option(buf, "filetype", Presenting._state.filetype)
