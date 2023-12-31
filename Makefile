@@ -34,6 +34,9 @@ test: deps  ## Runs all tests
 	# 	-c "lua require('mini.test').setup()" \
 	# 	-c "lua MiniTest.run({ execute = { reporter = MiniTest.gen_reporter.stdout({ group_depth = 1 }) } })"
 
+.PHONY: examples
+examples: ## Generate animated examples
+	vhs presentation.tape
 
 ################################################################################
 deps:  ## installs `mini.nvim`, used for both the tests and documentation.

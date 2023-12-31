@@ -8,6 +8,14 @@ It simplifies the code (and removes some features).
 `presenting.vim` is a clone of [`present.vim`](https://github.com/pct/present.vim)
 which is a clone of [`presen.vim`](https://github.com/sorah/presen.vim).
 
+
+# Demo
+
+![demo presentation](examples/presentation.gif)
+
+(Images don't work in nvim by default 😢)
+
+
 # Usage
 
 With `presenting.nvim` installed and configured (see section below)
@@ -67,16 +75,6 @@ nvim -c Presenting README.adoc
 to make the slides **bigger**.
 
 
-# DevMode
-
-There is a dev mode that unloads+reloads the plugin 
-which is handy if you're developing the plugin.
-
-````
-PresentingDevMode
-````
-
-
 # Demo of markup elements
 
 I use this README as a demo of the markup elements.
@@ -85,13 +83,14 @@ The following sections don't have to do anything with the plugin itself.
 
 ## Markup and Lists
 
-**bolb** and *italic* and _italic_ and `code`
-and ~~strike~~ and <mark>mark</mark> and <u>underline</u>
+**bolb** and *italic* and _italic_ and `code` and ~~strike~~
 
 - list
 - list
   - list
   - list
+    - list
+
 
 ## Code block
 
@@ -101,3 +100,13 @@ def fib(n: int) -> int:
         return n
     return fib(n - 1) + fib(n - 2)
 ```
+
+
+# DevMode
+
+There is a dev mode that unloads+reloads the plugin 
+which is handy if you're developing the plugin.
+
+````
+PresentingDevMode
+````
