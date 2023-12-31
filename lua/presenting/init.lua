@@ -28,9 +28,7 @@ Presenting.setup = function(config)
   local presenting_autocmd_group_id = vim.api.nvim_create_augroup("PresentingAutoGroup", {})
   vim.api.nvim_create_autocmd("WinResized", {
     group = presenting_autocmd_group_id,
-    callback = function()
-      Presenting.resize()
-    end,
+    callback = function() Presenting.resize() end,
   })
 end
 
@@ -152,7 +150,10 @@ Presenting.next = function()
     vim.notify("Not presenting. Call `PresentingStart` first.")
     return
   end
-  H.set_slide_content(Presenting._state, math.min(Presenting._state.slide + 1, Presenting._state.n_slides))
+  H.set_slide_content(
+    Presenting._state,
+    math.min(Presenting._state.slide + 1, Presenting._state.n_slides)
+  )
 end
 
 --- Go to the previous slide.
@@ -187,9 +188,7 @@ end
 
 ---Resize the slide window.
 Presenting.resize = function()
-  if not H.in_presenting_mode() then
-    return
-  end
+  if not H.in_presenting_mode() then return end
   if (Presenting._state.background_win == nil) or (Presenting._state.slide_win == nil) then
     return
   end
@@ -267,7 +266,8 @@ H.create_slide_view = function(state)
   local window_config = H.get_win_configs()
 
   state.background_buf = vim.api.nvim_create_buf(false, true)
-  state.background_win = vim.api.nvim_open_win(state.background_buf, false, window_config.background)
+  state.background_win =
+    vim.api.nvim_open_win(state.background_buf, false, window_config.background)
 
   -- TODO: maybe just use vims statusline instead of my custom footer :)
   state.footer_buf = vim.api.nvim_create_buf(false, true)
@@ -291,9 +291,7 @@ H.parse_slides = function(lines, separator)
   local slide = {}
   for i, line in pairs(lines) do
     if line:match(separator) then
-      if #slide > 0 then
-        table.insert(slides, table.concat(slide, "\n"))
-      end
+      if #slide > 0 then table.insert(slides, table.concat(slide, "\n")) end
       slide = {}
     end
     table.insert(slide, line)
@@ -318,7 +316,13 @@ H.set_slide_content = function(state, slide)
   local orig_modifiable = vim.api.nvim_buf_get_option(state.slide_buf, "modifiable")
   vim.api.nvim_buf_set_option(state.slide_buf, "modifiable", true)
   state.slide = slide
-  vim.api.nvim_buf_set_lines(state.slide_buf, 0, -1, false, vim.split(state.slides[state.slide], "\n"))
+  vim.api.nvim_buf_set_lines(
+    state.slide_buf,
+    0,
+    -1,
+    false,
+    vim.split(state.slides[state.slide], "\n")
+  )
   vim.api.nvim_buf_set_option(state.slide_buf, "modifiable", orig_modifiable)
 
   local footer_text = "presenting.nvim | " .. state.slide .. "/" .. state.n_slides
@@ -337,8 +341,6 @@ H.set_slide_keymaps = function(buf, mappings)
 end
 
 ---@return boolean
-H.in_presenting_mode = function()
-  return Presenting._state ~= nil
-end
+H.in_presenting_mode = function() return Presenting._state ~= nil end
 
 return Presenting
