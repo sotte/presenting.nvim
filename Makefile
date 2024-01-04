@@ -9,14 +9,18 @@ COMMIT:=$(shell git rev-parse --short HEAD)
 ################################################################################
 ##@ Maintenance
 .PHONY: all
-all: update-readmes lint docs pre-commit ## Runs all the targets
+all: update-readmes fmt lint docs pre-commit ## Runs all the targets
 
 .PHONY: docs
 docs: deps ## generates the docs.
 	nvim --headless --noplugin -u ./scripts/minimal_init.lua -c "lua require('mini.doc').generate()" -c "qa!"
 
 .PHONY: lint
-lint:  deps ## performs a lint check and fixes issue if possible, following the config in `stylua.toml`.
+lint:  deps ## run the linter.
+	luacheck lua/
+
+.PHONY: fmt
+fmt:  deps ## run the formatter.
 	stylua .
 
 .PHONY: update-readmes

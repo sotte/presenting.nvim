@@ -215,9 +215,11 @@ end
 --- ==============================================================================
 --- Internal Helper
 --- As end user you should not need to use these functions.
+---@private
 H.default_config = vim.deepcopy(Presenting.config)
 
 ---@param config table|nil
+---@private
 H.setup_config = function(config)
   vim.validate({ config = { config, "table", true } })
   -- TODO: validate some more
@@ -225,12 +227,14 @@ H.setup_config = function(config)
 end
 
 ---@param config table
+---@private
 H.apply_config = function(config)
   -- nothing to do right now
   Presenting.config = config
 end
 
 ---@return table
+---@private
 H.get_win_configs = function()
   local slide_width = Presenting.config.options.width
   local width = vim.api.nvim_get_option("columns")
@@ -270,6 +274,7 @@ H.get_win_configs = function()
 end
 
 ---@param state table
+---@private
 H.create_slide_view = function(state)
   local window_config = H.get_win_configs()
 
@@ -293,11 +298,12 @@ end
 ---@param lines table
 ---@param separator string
 ---@return table
+---@private
 H.parse_slides = function(lines, separator)
   -- TODO: isn't there a split() in lua that keeps the separator?
   local slides = {}
   local slide = {}
-  for i, line in pairs(lines) do
+  for _, line in pairs(lines) do
     if line:match(separator) then
       if #slide > 0 then table.insert(slides, table.concat(slide, "\n")) end
       slide = {}
@@ -310,6 +316,7 @@ H.parse_slides = function(lines, separator)
 end
 
 ---@param buf integer
+---@private
 H.configure_slide_buffer = function(buf)
   -- TODO: make this configurable via config
   vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
@@ -320,6 +327,7 @@ end
 
 ---@param state table
 ---@param slide integer
+---@private
 H.set_slide_content = function(state, slide)
   local orig_modifiable = vim.api.nvim_buf_get_option(state.slide_buf, "modifiable")
   vim.api.nvim_buf_set_option(state.slide_buf, "modifiable", true)
@@ -339,6 +347,7 @@ end
 
 ---@param buf integer
 ---@param mappings table
+---@private
 H.set_slide_keymaps = function(buf, mappings)
   for k, v in pairs(mappings) do
     if type(v) == "string" then
@@ -346,9 +355,8 @@ H.set_slide_keymaps = function(buf, mappings)
       vim.api.nvim_buf_set_keymap(buf, "n", k, cmd, { noremap = true, silent = true })
     elseif type(v) == "function" then
       vim.api.nvim_buf_set_keymap(buf, "n", k, "", { callback = v, noremap = true, silent = true })
-    elseif v == nil then
-      -- disable keymap 🤷
     end
+    -- no keymap on nil 🤷
   end
 end
 
