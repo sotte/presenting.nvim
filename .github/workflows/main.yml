@@ -11,9 +11,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
+  fmt:
     runs-on: ubuntu-latest
-    name: lint
+    name: fmt
     steps:
       - uses: actions/checkout@v3
 
@@ -22,6 +22,18 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: latest
           args: --check .
+
+  lint:
+    runs-on: ubuntu-latest
+    name: lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Luacheck linter
+        uses: lunarmodules/luacheck@v1
+        with:
+            args: lua
 
   documentation:
     runs-on: ubuntu-latest

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Add CONTRIBUTING.md and more automation
 - Animated example gif to README.md
 - Support configuration of the slide buffer via lua functions
 - Support lua functions to for keymaps
