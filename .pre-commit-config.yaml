@@ -3,17 +3,32 @@ repos:
   rev: v2.3.0
   hooks:
   - id: check-yaml
+
 - repo: https://github.com/JohnnyMorganz/StyLua
   rev: v0.19.1
   hooks:
     - id: stylua-system
+
 - repo: local
   hooks:
+    - id: lint
+      name: lint
+      entry: make lint
+      language: system
+      pass_filenames: false
+
+    - id: fmt
+      name: fmt
+      entry: make fmt
+      language: system
+      pass_filenames: false
+
     - id: generate-docs
       name: generate-docs
       entry: make docs
       language: system
       pass_filenames: false
+
     - id: update-readmes
       name: update-readmes
       entry: make update-readmes
