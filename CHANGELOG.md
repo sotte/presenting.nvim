@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix url to doc/presenting.txt
 - README: list of keymaps was broken
+- Footer stays in place when resizing
 
 ### Removed
 
