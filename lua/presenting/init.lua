@@ -197,7 +197,11 @@ end
 ---Resize the slide window.
 Presenting.resize = function()
   if not H.in_presenting_mode() then return end
-  if (Presenting._state.background_win == nil) or (Presenting._state.slide_win == nil) or (Presenting._state.footer_win == nil) then
+  if
+    (Presenting._state.background_win == nil)
+    or (Presenting._state.slide_win == nil)
+    or (Presenting._state.footer_win == nil)
+  then
     return
   end
 
