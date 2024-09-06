@@ -26,7 +26,7 @@ Usage ~
 Module config
 
 Default values:
->
+>lua
   Presenting.config = {
     options = {
       -- The width of the slide buffer.
@@ -58,7 +58,6 @@ Default values:
     configure_slide_buffer = function(buf) H.configure_slide_buffer(buf) end,
   }
 <
-
 ------------------------------------------------------------------------------
 ==============================================================================
 # Core functionality
