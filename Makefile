@@ -1,7 +1,7 @@
 ################################################################################
 # DEFINES
 .DEFAULT_GOAL:=help
-SHELL:=/bin/bash
+SHELL:=/usr/bin/env bash
 
 PROJECT_NAME:=presenting.nvim
 COMMIT:=$(shell git rev-parse --short HEAD)
