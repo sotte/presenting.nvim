@@ -39,7 +39,7 @@ end
 Presenting.config = {
   options = {
     -- The width of the slide buffer.
-    width = 60,
+    width = 90,
   },
   separator = {
     -- Separators for different filetypes.
@@ -50,6 +50,7 @@ Presenting.config = {
     adoc = "^==+ ",
     asciidoctor = "^==+ ",
   },
+  keep_separator = true,
   keymaps = {
     -- These are local mappings for the open slide buffer.
     -- Disable existing keymaps by setting them to `nil`.
@@ -57,8 +58,8 @@ Presenting.config = {
     ["n"] = function() Presenting.next() end,
     ["p"] = function() Presenting.prev() end,
     ["q"] = function() Presenting.quit() end,
-    ["f"] = function() Presenting.first() end,
-    ["l"] = function() Presenting.last() end,
+    ["F"] = function() Presenting.first() end,
+    ["L"] = function() Presenting.last() end,
     ["<CR>"] = function() Presenting.next() end,
     ["<BS>"] = function() Presenting.prev() end,
   },
@@ -125,7 +126,7 @@ Presenting.start = function(separator)
 
   -- content of slides
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-  Presenting._state.slides = H.parse_slides(lines, separator)
+  Presenting._state.slides = H.parse_slides(lines, separator, Presenting.config.keep_separator)
   Presenting._state.n_slides = #Presenting._state.slides
 
   H.create_slide_view(Presenting._state)
@@ -304,7 +305,7 @@ end
 ---@param separator string
 ---@return table
 ---@private
-H.parse_slides = function(lines, separator)
+H.parse_slides = function(lines, separator, keep_separator)
   -- TODO: isn't there a split() in lua that keeps the separator?
   local slides = {}
   local slide = {}
@@ -312,8 +313,12 @@ H.parse_slides = function(lines, separator)
     if line:match(separator) then
       if #slide > 0 then table.insert(slides, table.concat(slide, "\n")) end
       slide = {}
+      if keep_separator then
+        table.insert(slide, line)
+      end
+    else
+      table.insert(slide, line)
     end
-    table.insert(slide, line)
   end
   table.insert(slides, table.concat(slide, "\n"))
 
