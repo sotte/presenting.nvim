@@ -362,8 +362,10 @@ H.set_slide_content = function(state, slide)
   if #presentation_title > width - #footer_nrs - 3 then
     presentation_title = presentation_title:sub(1, width - #footer_nrs - 3) .. "..."
   end
+  -- get presentation title with unicode in mind
+  local title_len = vim.str_utfindex(presentation_title)
   -- add white spaces between title and slide number
-  local white_space_fill = string.rep(" ", width - #presentation_title - #footer_nrs)
+  local white_space_fill = string.rep(" ", width - title_len - #footer_nrs)
   local footer_text = presentation_title .. white_space_fill .. footer_nrs
   vim.api.nvim_buf_set_lines(state.footer_buf, 0, -1, false, { footer_text })
 end
