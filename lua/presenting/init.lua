@@ -346,7 +346,25 @@ H.set_slide_content = function(state, slide)
   )
   vim.api.nvim_buf_set_option(state.slide_buf, "modifiable", orig_modifiable)
 
-  local footer_text = "presenting.nvim | " .. state.slide .. "/" .. state.n_slides
+  -- create slide numbers for footer
+  local footer_nrs = state.slide .. "/" .. state.n_slides
+
+  -- extract title from first line of first slide
+  local presentation_title = vim.split(state.slides[1], "\n")[1]
+  -- strip any trailing whitespace
+  presentation_title = presentation_title:gsub("%s+$", "")
+  -- strip any starting * or # for org and md
+  presentation_title = presentation_title:gsub("^%*+%s*", "")
+  presentation_title = presentation_title:gsub("^#+%s*", "")
+
+  -- if title is too long shorten with elipsis
+  local width = Presenting.config.options.width
+  if #presentation_title > width - #footer_nrs - 3 then
+    presentation_title = presentation_title:sub(1, width - #footer_nrs - 3) .. "..."
+  end
+  -- add white spaces between title and slide number
+  local white_space_fill = string.rep(" ", width - #presentation_title - #footer_nrs)
+  local footer_text = presentation_title .. white_space_fill .. footer_nrs
   vim.api.nvim_buf_set_lines(state.footer_buf, 0, -1, false, { footer_text })
 end
 
