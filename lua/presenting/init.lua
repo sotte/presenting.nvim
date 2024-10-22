@@ -352,14 +352,14 @@ H.set_slide_content = function(state, slide)
   local footer_nrs = state.slide .. "/" .. state.n_slides
 
   local presentation_title = state.title
+  -- get presentation title with unicode in mind
+  local title_len = vim.str_utfindex(presentation_title)
 
   -- if title is too long shorten with elipsis
   local width = Presenting.config.options.width
-  if #presentation_title > width - #footer_nrs - 3 then
+  if title_len > width - #footer_nrs - 3 then
     presentation_title = presentation_title:sub(1, width - #footer_nrs - 3) .. "..."
   end
-  -- get presentation title with unicode in mind
-  local title_len = vim.str_utfindex(presentation_title)
   -- add white spaces between title and slide number
   local white_space_fill = string.rep(" ", width - title_len - #footer_nrs)
   local footer_text = presentation_title .. white_space_fill .. footer_nrs
