@@ -127,6 +127,8 @@ Presenting.start = function(separator)
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
   Presenting._state.slides = H.parse_slides(lines, separator)
   Presenting._state.n_slides = #Presenting._state.slides
+  -- extract presentation title from first non-empty line of first slide
+  Presenting._state.title = H.extract_title(Presenting._state.slides[1])
 
   H.create_slide_view(Presenting._state)
 end
@@ -349,13 +351,7 @@ H.set_slide_content = function(state, slide)
   -- create slide numbers for footer
   local footer_nrs = state.slide .. "/" .. state.n_slides
 
-  -- extract title from first line of first slide
-  local presentation_title = vim.split(state.slides[1], "\n")[1]
-  -- strip any trailing whitespace
-  presentation_title = presentation_title:gsub("%s+$", "")
-  -- strip any starting * or # for org and md
-  presentation_title = presentation_title:gsub("^%*+%s*", "")
-  presentation_title = presentation_title:gsub("^#+%s*", "")
+  local presentation_title = state.title
 
   -- if title is too long shorten with elipsis
   local width = Presenting.config.options.width
@@ -387,5 +383,22 @@ end
 
 ---@return boolean
 H.in_presenting_mode = function() return Presenting._state ~= nil end
+
+H.extract_title = function(slide)
+  local title = ""
+  for _, line in pairs(vim.split(slide, "\n")) do
+    -- if line is nonempty set it as title
+    if line:match("%S") then
+      title = line
+      break
+    end
+  end
+  -- strip any trailing whitespace
+  title = title:gsub("%s+$", "")
+  -- strip any starting * or # for org and md
+  title = title:gsub("^%*+%s*", "")
+  title = title:gsub("^#+%s*", "")
+  return title
+end
 
 return Presenting
