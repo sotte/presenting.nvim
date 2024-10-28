@@ -41,6 +41,9 @@ Default values:
       adoc = "^==+ ",
       asciidoctor = "^==+ ",
     },
+    -- Keep the separator, useful if you're parsing based on headings.
+    -- If you want to parse on a non-heading separator, e.g. `---` set this to false.
+    keep_separator = true,
     keymaps = {
       -- These are local mappings for the open slide buffer.
       -- Disable existing keymaps by setting them to `nil`.
