@@ -39,7 +39,7 @@ end
 Presenting.config = {
   options = {
     -- The width of the slide buffer.
-    width = 90,
+    width = 60,
   },
   separator = {
     -- Separators for different filetypes.
@@ -50,6 +50,8 @@ Presenting.config = {
     adoc = "^==+ ",
     asciidoctor = "^==+ ",
   },
+  -- Keep the separator, useful if you're parsing based on headings.
+  -- If you want to parse on a non-heading separator, e.g. `---` set this to false.
   keep_separator = true,
   keymaps = {
     -- These are local mappings for the open slide buffer.
@@ -58,8 +60,8 @@ Presenting.config = {
     ["n"] = function() Presenting.next() end,
     ["p"] = function() Presenting.prev() end,
     ["q"] = function() Presenting.quit() end,
-    ["F"] = function() Presenting.first() end,
-    ["L"] = function() Presenting.last() end,
+    ["f"] = function() Presenting.first() end,
+    ["l"] = function() Presenting.last() end,
     ["<CR>"] = function() Presenting.next() end,
     ["<BS>"] = function() Presenting.prev() end,
   },
