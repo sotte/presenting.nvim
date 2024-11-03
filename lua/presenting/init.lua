@@ -130,6 +130,8 @@ Presenting.start = function(separator)
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
   Presenting._state.slides = H.parse_slides(lines, separator, Presenting.config.keep_separator)
   Presenting._state.n_slides = #Presenting._state.slides
+  -- extract presentation title from first non-empty line of first slide
+  Presenting._state.title = H.extract_title(Presenting._state.slides[1])
 
   H.create_slide_view(Presenting._state)
 end
@@ -351,7 +353,21 @@ H.set_slide_content = function(state, slide)
   )
   vim.api.nvim_buf_set_option(state.slide_buf, "modifiable", orig_modifiable)
 
-  local footer_text = "presenting.nvim | " .. state.slide .. "/" .. state.n_slides
+  -- create slide numbers for footer
+  local footer_nrs = state.slide .. "/" .. state.n_slides
+
+  local presentation_title = state.title
+  -- get presentation title with unicode in mind
+  local title_len = vim.str_utfindex(presentation_title)
+
+  -- if title is too long shorten with elipsis
+  local width = Presenting.config.options.width
+  if title_len > width - #footer_nrs - 3 then
+    presentation_title = presentation_title:sub(1, width - #footer_nrs - 3) .. "..."
+  end
+  -- add white spaces between title and slide number
+  local white_space_fill = string.rep(" ", width - title_len - #footer_nrs)
+  local footer_text = presentation_title .. white_space_fill .. footer_nrs
   vim.api.nvim_buf_set_lines(state.footer_buf, 0, -1, false, { footer_text })
 end
 
@@ -372,5 +388,22 @@ end
 
 ---@return boolean
 H.in_presenting_mode = function() return Presenting._state ~= nil end
+
+H.extract_title = function(slide)
+  local title = ""
+  for _, line in pairs(vim.split(slide, "\n")) do
+    -- if line is nonempty set it as title
+    if line:match("%S") then
+      title = line
+      break
+    end
+  end
+  -- strip any trailing whitespace
+  title = title:gsub("%s+$", "")
+  -- strip any starting * or # for org and md
+  title = title:gsub("^%*+%s*", "")
+  title = title:gsub("^#+%s*", "")
+  return title
+end
 
 return Presenting
