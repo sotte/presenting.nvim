@@ -315,9 +315,7 @@ H.parse_slides = function(lines, separator, keep_separator)
     if line:match(separator) then
       if #slide > 0 then table.insert(slides, table.concat(slide, "\n")) end
       slide = {}
-      if keep_separator then
-        table.insert(slide, line)
-      end
+      if keep_separator then table.insert(slide, line) end
     else
       table.insert(slide, line)
     end
