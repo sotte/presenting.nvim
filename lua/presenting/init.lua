@@ -53,6 +53,8 @@ Presenting.config = {
   -- Keep the separator, useful if you're parsing based on headings.
   -- If you want to parse on a non-heading separator, e.g. `---` set this to false.
   keep_separator = true,
+  --- Parse first section of frontmatter, from first `---` to second `---`
+  parse_frontmatter = false,
   keymaps = {
     -- These are local mappings for the open slide buffer.
     -- Disable existing keymaps by setting them to `nil`.
@@ -308,19 +310,51 @@ end
 ---@return table
 ---@private
 H.parse_slides = function(lines, separator, keep_separator)
-  -- TODO: isn't there a split() in lua that keeps the separator?
+  -- Remove frontmatter if configured
+  if Presenting.config.parse_frontmatter then
+    local in_frontmatter = false
+    local new_lines = {}
+    local frontmatter_found = 0
+    for _, line in ipairs(lines) do
+      if line:match("^%-%-%-%s*$") then
+        frontmatter_found = frontmatter_found + 1
+        if frontmatter_found == 1 then
+          in_frontmatter = true
+        elseif frontmatter_found == 2 then
+          in_frontmatter = false
+          goto continue
+        end
+        goto continue
+      end
+      if not in_frontmatter then table.insert(new_lines, line) end
+      ::continue::
+    end
+    lines = new_lines
+    -- Remove leading blank lines after frontmatter
+    while lines[1] and lines[1]:match("^%s*$") do
+      table.remove(lines, 1)
+    end
+  end
+
   local slides = {}
   local slide = {}
-  for _, line in pairs(lines) do
+  for _, line in ipairs(lines) do
     if line:match(separator) then
-      if #slide > 0 then table.insert(slides, table.concat(slide, "\n")) end
+      if #slide > 0 then
+        table.insert(slides, table.concat(slide, "\n"))
+      elseif #slides == 0 then
+        -- Skip leading separator after frontmatter
+        if keep_separator then table.insert(slide, line) end
+        goto continue
+      end
       slide = {}
       if keep_separator then table.insert(slide, line) end
     else
       table.insert(slide, line)
     end
+    ::continue::
   end
-  table.insert(slides, table.concat(slide, "\n"))
+  if #slide > 0 then table.insert(slides, table.concat(slide, "\n")) end
 
   return slides
 end
