@@ -202,18 +202,24 @@ end
 ---Resize the slide window.
 Presenting.resize = function()
   if not H.in_presenting_mode() then return end
+  local s = Presenting._state
   if
-    (Presenting._state.background_win == nil)
-    or (Presenting._state.slide_win == nil)
-    or (Presenting._state.footer_win == nil)
+    not (
+      s.background_win
+      and vim.api.nvim_win_is_valid(s.background_win)
+      and s.slide_win
+      and vim.api.nvim_win_is_valid(s.slide_win)
+      and s.footer_win
+      and vim.api.nvim_win_is_valid(s.footer_win)
+    )
   then
     return
   end
 
   local window_config = H.get_win_configs()
-  vim.api.nvim_win_set_config(Presenting._state.background_win, window_config.background)
-  vim.api.nvim_win_set_config(Presenting._state.footer_win, window_config.footer)
-  vim.api.nvim_win_set_config(Presenting._state.slide_win, window_config.slide)
+  vim.api.nvim_win_set_config(s.background_win, window_config.background)
+  vim.api.nvim_win_set_config(s.footer_win, window_config.footer)
+  vim.api.nvim_win_set_config(s.slide_win, window_config.slide)
 end
 
 Presenting.dev_mode = function()
