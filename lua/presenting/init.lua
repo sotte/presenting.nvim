@@ -43,7 +43,7 @@ Presenting.config = {
   },
   separator = {
     -- Separators for different filetypes.
-    -- You can add your own or oberwrite existing ones.
+    -- You can add your own or overwrite existing ones.
     -- Note: separators are lua patterns, not regexes.
     markdown = "^#+ ",
     org = "^*+ ",
