@@ -1,5 +1,3 @@
-==============================================================================
-------------------------------------------------------------------------------
 *presenting.nvim*
 *Presenting*
 
@@ -61,6 +59,14 @@ Default values:
     -- A function that configures the slide buffer.
     -- If you want custom settings write your own function that accepts a buffer id as argument.
     configure_slide_buffer = function(buf) H.configure_slide_buffer(buf) end,
+    -- Start tree-sitter highlighting in the slide buffer.
+    -- Fenced code blocks are highlighted when their parsers are installed.
+    syntax_highlighting = {
+      enabled = false,
+      -- Parser to start for the slide buffer.
+      -- Defaults to the presented filetype when not set.
+      parser = nil,
+    },
   }
 <
 ------------------------------------------------------------------------------

@@ -70,6 +70,14 @@ Presenting.config = {
   -- A function that configures the slide buffer.
   -- If you want custom settings write your own function that accepts a buffer id as argument.
   configure_slide_buffer = function(buf) H.configure_slide_buffer(buf) end,
+  -- Start tree-sitter highlighting in the slide buffer.
+  -- Fenced code blocks are highlighted when their parsers are installed.
+  syntax_highlighting = {
+    enabled = false,
+    -- Parser to start for the slide buffer.
+    -- Defaults to the presented filetype when not set.
+    parser = nil,
+  },
 }
 --minidoc_afterlines_end
 
@@ -380,19 +388,28 @@ end
 ---@private
 H.set_slide_content = function(state, slide)
   local orig_modifiable = vim.api.nvim_buf_get_option(state.slide_buf, "modifiable")
+  local slide_lines = vim.split(state.slides[slide], "\n")
   vim.api.nvim_buf_set_option(state.slide_buf, "modifiable", true)
   state.slide = slide
-  vim.api.nvim_buf_set_lines(
-    state.slide_buf,
-    0,
-    -1,
-    false,
-    vim.split(state.slides[state.slide], "\n")
-  )
+  vim.api.nvim_buf_set_lines(state.slide_buf, 0, -1, false, slide_lines)
   vim.api.nvim_buf_set_option(state.slide_buf, "modifiable", orig_modifiable)
+  H.start_syntax_highlighting(state)
 
   local footer_text = "presenting.nvim | " .. state.slide .. "/" .. state.n_slides
   vim.api.nvim_buf_set_lines(state.footer_buf, 0, -1, false, { footer_text })
+end
+
+---@param state table
+---@private
+H.start_syntax_highlighting = function(state)
+  local syntax_highlighting = Presenting.config.syntax_highlighting
+  if syntax_highlighting == nil or not syntax_highlighting.enabled then return end
+
+  local parser = syntax_highlighting.parser or state.filetype
+  if parser == nil or parser == "" then return end
+
+  pcall(require, "nvim-treesitter.query_predicates")
+  pcall(vim.treesitter.start, state.slide_buf, parser)
 end
 
 ---@param buf integer

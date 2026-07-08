@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Add optional tree-sitter syntax highlighting for slide buffers
 - Added parse_frontmatter option to parse out frontmatter
 - Add CONTRIBUTING.md and more automation
 - Animated example gif to README.md
