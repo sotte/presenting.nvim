@@ -308,6 +308,11 @@ H.create_slide_view = function(state)
   Presenting.config.configure_slide_buffer(state.slide_buf)
   H.set_slide_keymaps(state.slide_buf, Presenting.config.keymaps)
 
+  -- Floating windows use NormalFloat by default. Use the regular editor colors instead.
+  for _, win in ipairs({ state.background_win, state.footer_win, state.slide_win }) do
+    vim.wo[win].winhighlight = "NormalFloat:Normal"
+  end
+
   H.set_slide_content(state, 1)
 end
 
