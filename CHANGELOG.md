@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README: list of keymaps was broken
 - Footer stays in place when resizing
 - Fix misspelling of 'overwrite' in documentation
+- Use the normal editor colors for presentation windows
 
 ### Removed
 
